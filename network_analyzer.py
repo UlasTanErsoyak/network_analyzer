@@ -1,7 +1,8 @@
-import os
+import sys
 import psutil
 from scapy.all import *
 from scapy.layers.inet import TCP,IP
+import os
 
 class NetworkAnalyzer():
     def __init__(self) -> None:
@@ -78,46 +79,59 @@ class NetworkAnalyzer():
     
 
     def tcp_packets(self,packet):
-        if TCP in packet:
-            src_ip = packet[IP].src
-            dst_ip = packet[IP].dst
-            sport = packet[TCP].sport
-            dport = packet[TCP].dport
-            packet_length = len(packet)
-            ttl = packet[IP].ttl
-            protocol = packet[IP].proto
-        print(f"packet length: {packet_length} /|\ source: {src_ip} /|\ destination: {dst_ip} /|\ source port:{sport} /|\ destination port:{dport} /|\ time to live :{ttl} /|\ protocol :{protocol}")
+            try:
+                if TCP in packet:
+                    src_ip = packet[IP].src
+                    dst_ip = packet[IP].dst
+                    sport = packet[TCP].sport
+                    dport = packet[TCP].dport
+                    packet_length = len(packet)
+                    ttl = packet[IP].ttl
+                    protocol = packet[IP].proto
+                print(f"packet length: {packet_length} /|\ source: {src_ip} /|\ destination: {dst_ip} /|\ source port:{sport} /|\ destination port:{dport} /|\ time to live :{ttl} /|\ protocol :{protocol}")
+            except KeyboardInterrupt:
+                os.system("cls")
 
+        
     def ip_packets(self,packet):
-        if IP in packet:
-            src_ip = packet[IP].src
-            dst_ip = packet[IP].dst
-            sport = packet[IP].sport
-            dport = packet[IP].dport
-            packet_length = len(packet)
-            ttl = packet[IP].ttl
-            protocol = packet[IP].proto
-        print(f"packet length: {packet_length} /|\ source: {src_ip} /|\ destination: {dst_ip} /|\ source port:{sport} /|\ destination port:{dport} /|\ time to live :{ttl} /|\ protocol :{protocol}")
-
+            try:
+                if IP in packet:
+                    src_ip = packet[IP].src
+                    dst_ip = packet[IP].dst
+                    sport = packet[IP].sport
+                    dport = packet[IP].dport
+                    packet_length = len(packet)
+                    ttl = packet[IP].ttl
+                    protocol = packet[IP].proto
+                print(f"packet length: {packet_length} /|\ source: {src_ip} /|\ destination: {dst_ip} /|\ source port:{sport} /|\ destination port:{dport} /|\ time to live :{ttl} /|\ protocol :{protocol}")
+            except KeyboardInterrupt:
+                os.system("cls")
+                
 
     def http_packets(self,packet):
-        if TCP in packet and (packet[TCP].dport == 80 or packet[TCP].dport == 8080):
-            src_ip = packet[IP].src
-            dst_ip = packet[IP].dst
-            sport = packet[TCP].sport
-            dport = packet[TCP].dport
-            packet_length = len(packet)
-            ttl = packet[IP].ttl
-            protocol = packet[IP].proto
-        print(f"packet length: {packet_length} /|\ source: {src_ip} /|\ destination: {dst_ip} /|\ source port:{sport} /|\ destination port:{dport} /|\ time to live :{ttl} /|\ protocol :{protocol}")
+            try:
+                if TCP in packet and (packet[TCP].dport == 80 or packet[TCP].dport == 8080):
+                    src_ip = packet[IP].src
+                    dst_ip = packet[IP].dst
+                    sport = packet[TCP].sport
+                    dport = packet[TCP].dport
+                    packet_length = len(packet)
+                    ttl = packet[IP].ttl
+                    protocol = packet[IP].proto
+                print(f"packet length: {packet_length} /|\ source: {src_ip} /|\ destination: {dst_ip} /|\ source port:{sport} /|\ destination port:{dport} /|\ time to live :{ttl} /|\ protocol :{protocol}")
+            except KeyboardInterrupt:
+                os.system("cls")
+                
 
 
 
-
-    def capture_packets(self,number_of_packets=5,packet_type="tcp"):
-            if(packet_type == "tcp"):
-                sniff(filter=packet_type, prn=self.tcp_packets, count=number_of_packets)
-            if(packet_type == "ip"):
-                sniff(filter=packet_type, prn=self.ip_packets, count=number_of_packets)
-            if(packet_type == "tcp port 80"):
-                sniff(filter=packet_type, prn=self.http_packets,count=number_of_packets)
+    def capture_packets(self,packet_type="tcp"):
+            try:
+                if(packet_type == "tcp"):
+                    sniff(filter=packet_type, prn=self.tcp_packets, count=sys.maxsize)
+                if(packet_type == "ip"):
+                    sniff(filter=packet_type, prn=self.ip_packets, count=sys.maxsize)
+                if(packet_type == "tcp port 80"):
+                    sniff(filter=packet_type, prn=self.http_packets,count=sys.maxsize)
+            except KeyboardInterrupt:
+                 os.system("cls")

@@ -13,13 +13,15 @@ def bandwidth_monitoring() -> None:
     networkanalyzer.choose_device()
     os.system("cls")
     print(f"current device: {networkanalyzer.current_device}")
-    print("enter how many seconds you want to monitor the band")
-    second = input()
-    for i in range(int(second)):
-        output = networkanalyzer.monitor_bandwidth_usage()
-        update(output)
-        print(output)
-        time.sleep(1)
+    while(True):
+        try:
+            output = networkanalyzer.monitor_bandwidth_usage()
+            update(output)
+            print(output)
+            time.sleep(0.5)
+        except KeyboardInterrupt:
+            os.system("cls")
+            break
 
 def sniff_packets()-> None:
     networkanalyzer = NetworkAnalyzer()
@@ -29,9 +31,7 @@ def sniff_packets()-> None:
         print(f"{i+1}. {protocol}")
     index = int(input()) - 1
     choosen_protocol = networkanalyzer.protocols[index]
-    print("enter how many packets you want to capture")
-    packet_count = int(input())
-    networkanalyzer.capture_packets(packet_count,packet_type=choosen_protocol)
+    networkanalyzer.capture_packets(choosen_protocol)
 
 
 def menu() -> None:
