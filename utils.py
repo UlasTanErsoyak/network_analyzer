@@ -60,6 +60,7 @@ def menu() -> None:
             sniff_packets()
 
         elif(x == 3):
+            os.system("cls")
             break
 
         else:
