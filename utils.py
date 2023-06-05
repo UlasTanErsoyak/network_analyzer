@@ -24,6 +24,11 @@ def bandwidth_monitoring() -> None:
             break
 
 def sniff_packets()-> None:
+    """Prompts the user to choose a protocol and captures packets based on the selected protocol.
+
+    Returns:
+        None
+    """
     networkanalyzer = NetworkAnalyzer()
     os.system("cls")
     print("choose a protocol to capture packets from")

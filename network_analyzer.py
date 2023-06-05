@@ -79,6 +79,14 @@ class NetworkAnalyzer():
     
 
     def tcp_packets(self,packet):
+            """Processes and prints information about TCP packets.
+
+            Args:
+                packet: The packet to analyze.
+
+            Returns:
+                None
+            """
             try:
                 if TCP in packet:
                     src_ip = packet[IP].src
@@ -94,6 +102,14 @@ class NetworkAnalyzer():
 
         
     def ip_packets(self,packet):
+            """Processes and prints information about IP packets.
+
+            Args:
+                packet: The packet to analyze.
+
+            Returns:
+                None
+            """
             try:
                 if IP in packet:
                     src_ip = packet[IP].src
@@ -109,6 +125,14 @@ class NetworkAnalyzer():
                 
 
     def http_packets(self,packet):
+            """Processes and prints information about HTTP packets.
+
+            Args:
+                packet: The packet to analyze.
+
+            Returns:
+                None
+            """
             try:
                 if TCP in packet and (packet[TCP].dport == 80 or packet[TCP].dport == 8080):
                     src_ip = packet[IP].src
@@ -126,6 +150,14 @@ class NetworkAnalyzer():
 
 
     def capture_packets(self,packet_type="tcp"):
+            """Captures packets based on the specified packet type.
+
+            Args:
+                packet_type: The type of packets to capture (default is "tcp").
+
+            Returns:
+                None
+            """
             try:
                 if(packet_type == "tcp"):
                     sniff(filter=packet_type, prn=self.tcp_packets, count=sys.maxsize)
